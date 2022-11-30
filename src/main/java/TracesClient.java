@@ -27,6 +27,7 @@ public class TracesClient {
     }
 
     private final TraceGrpc.TraceFutureStub futureStub;
+    private final TraceGrpc.TraceBlockingStub blockingStub;
     private List<Profile> chunk = new ArrayList<>();
 
     private TracesClient() {
@@ -36,7 +37,7 @@ public class TracesClient {
                 .usePlaintext()
                 .build();
         futureStub = TraceGrpc.newFutureStub(channel);
-
+        blockingStub = TraceGrpc.newBlockingStub(channel);
         buildMockTraces();
     }
 
@@ -62,6 +63,9 @@ public class TracesClient {
                 try {
                     Profiles profiles = Profiles.newBuilder().addAllItems(chunk).setTimestamp(System.currentTimeMillis()).build();
                     long before = System.currentTimeMillis();
+                    System.out.println("Sent at: " + before);
+//                    Empty res = blockingStub.uploadTraces(profiles);
+//                    System.out.println("Received response. It took " + (System.currentTimeMillis() - before));
                     ListenableFuture<Empty> listenableFuture = futureStub.uploadTraces(profiles);
                     listenableFuture.addListener(() -> System.out.println("Received response. It took " + (System.currentTimeMillis() - before)), Executors.newSingleThreadExecutor());
                     Thread.sleep(100);

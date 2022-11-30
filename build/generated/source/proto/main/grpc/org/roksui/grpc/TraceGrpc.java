@@ -46,6 +46,37 @@ public final class TraceGrpc {
     return getUploadTracesMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<org.roksui.grpc.Profiles,
+      com.google.protobuf.Empty> getUploadTracesStreamMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "UploadTracesStream",
+      requestType = org.roksui.grpc.Profiles.class,
+      responseType = com.google.protobuf.Empty.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<org.roksui.grpc.Profiles,
+      com.google.protobuf.Empty> getUploadTracesStreamMethod() {
+    io.grpc.MethodDescriptor<org.roksui.grpc.Profiles, com.google.protobuf.Empty> getUploadTracesStreamMethod;
+    if ((getUploadTracesStreamMethod = TraceGrpc.getUploadTracesStreamMethod) == null) {
+      synchronized (TraceGrpc.class) {
+        if ((getUploadTracesStreamMethod = TraceGrpc.getUploadTracesStreamMethod) == null) {
+          TraceGrpc.getUploadTracesStreamMethod = getUploadTracesStreamMethod =
+              io.grpc.MethodDescriptor.<org.roksui.grpc.Profiles, com.google.protobuf.Empty>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "UploadTracesStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.roksui.grpc.Profiles.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.protobuf.Empty.getDefaultInstance()))
+              .setSchemaDescriptor(new TraceMethodDescriptorSupplier("UploadTracesStream"))
+              .build();
+        }
+      }
+    }
+    return getUploadTracesStreamMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -101,6 +132,13 @@ public final class TraceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUploadTracesMethod(), responseObserver);
     }
 
+    /**
+     */
+    public io.grpc.stub.StreamObserver<org.roksui.grpc.Profiles> uploadTracesStream(
+        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getUploadTracesStreamMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -110,6 +148,13 @@ public final class TraceGrpc {
                 org.roksui.grpc.Profiles,
                 com.google.protobuf.Empty>(
                   this, METHODID_UPLOAD_TRACES)))
+          .addMethod(
+            getUploadTracesStreamMethod(),
+            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+              new MethodHandlers<
+                org.roksui.grpc.Profiles,
+                com.google.protobuf.Empty>(
+                  this, METHODID_UPLOAD_TRACES_STREAM)))
           .build();
     }
   }
@@ -134,6 +179,14 @@ public final class TraceGrpc {
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getUploadTracesMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<org.roksui.grpc.Profiles> uploadTracesStream(
+        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
+          getChannel().newCall(getUploadTracesStreamMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -183,6 +236,7 @@ public final class TraceGrpc {
   }
 
   private static final int METHODID_UPLOAD_TRACES = 0;
+  private static final int METHODID_UPLOAD_TRACES_STREAM = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -215,6 +269,9 @@ public final class TraceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_UPLOAD_TRACES_STREAM:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.uploadTracesStream(
+              (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -267,6 +324,7 @@ public final class TraceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new TraceFileDescriptorSupplier())
               .addMethod(getUploadTracesMethod())
+              .addMethod(getUploadTracesStreamMethod())
               .build();
         }
       }

@@ -36,9 +36,10 @@ public final class TraceOuterClass {
       "\n\013trace.proto\032\033google/protobuf/empty.pro" +
       "to\"6\n\010Profiles\022\027\n\005items\030\001 \003(\0132\010.Profile\022" +
       "\021\n\ttimestamp\030\002 \001(\003\"\027\n\007Profile\022\014\n\004text\030\001 " +
-      "\001(\t2:\n\005Trace\0221\n\014UploadTraces\022\t.Profiles\032" +
-      "\026.google.protobuf.EmptyB\023\n\017org.roksui.gr" +
-      "pcP\001b\006proto3"
+      "\001(\t2u\n\005Trace\0221\n\014UploadTraces\022\t.Profiles\032" +
+      "\026.google.protobuf.Empty\0229\n\022UploadTracesS" +
+      "tream\022\t.Profiles\032\026.google.protobuf.Empty" +
+      "(\001B\023\n\017org.roksui.grpcP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
