@@ -1,4 +1,14 @@
-## This repository is for testing the vertx gRPC API with Kotlin Coroutines
+
+## This repository consists of a GraphQL client and server.
+
+- Client is located under src/main/java
+- Server is located under src/main/kotlin
+
+
+
+
+
+~~## This repository is for testing the vertx gRPC API with Kotlin Coroutines
 
 This project has two parts.
 - gRPC server (Kotlin)
@@ -14,4 +24,4 @@ The server uses Vert.x and a fat-jar can be built with
 ./gradlew clean build
 ```
 
-The client can be run in IDE.
+The client can be run in IDE.~~
