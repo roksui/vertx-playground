@@ -1,13 +1,11 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import com.google.protobuf.gradle.*
 
 plugins {
     kotlin("jvm") version "1.7.10"
     java
     application
     id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("com.google.protobuf") version "0.8.19"
 }
 
 group = "org.roksui"
@@ -31,35 +29,24 @@ application {
 dependencies {
     implementation("io.vertx:vertx-core:$vertxVersion")
     implementation("io.vertx:vertx-web:$vertxVersion")
+    implementation("io.vertx:vertx-web-client:$vertxVersion")
+    implementation("io.vertx:vertx-web-graphql:$vertxVersion")
     implementation("io.vertx:vertx-codegen:$vertxVersion")
     implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
     implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
     implementation("io.vertx:vertx-grpc-server:$vertxVersion")
+    implementation("io.vertx:vertx-rx-java3:4.1.8")
 
     implementation(kotlin("stdlib-jdk8"))
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-
-    // gRPC
-    implementation("io.grpc:grpc-stub:$grpcProtoVersion")
-    implementation("io.grpc:grpc-protobuf:$grpcProtoVersion")
-    implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
-    implementation("com.google.protobuf:protobuf-kotlin:$grpcVersion")
-    api("com.google.protobuf:protobuf-java-util:$grpcVersion")
-    implementation("io.grpc:grpc-netty:1.51.0")
-}
-
-sourceSets {
-    val main by getting { }
-    main.java.srcDirs("build/generated/source/proto/main/grpc")
-    main.java.srcDirs("build/generated/source/proto/main/grpckt")
-    main.java.srcDirs("build/generated/source/proto/main/java")
 }
 
 tasks.withType<KotlinCompile>().all {
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
 }
@@ -74,29 +61,4 @@ tasks.withType<ShadowJar> {
         attributes(mapOf("Main-Class" to launcherClassName))
     }
     mergeServiceFiles()
-}
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:$grpcVersion"
-    }
-    plugins {
-        id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:$grpcProtoVersion"
-        }
-        id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk8@jar"
-        }
-    }
-    generateProtoTasks {
-        all().forEach {
-            it.plugins {
-                id("grpc")
-                id("grpckt")
-            }
-            it.builtins {
-                id("kotlin")
-            }
-        }
-    }
 }

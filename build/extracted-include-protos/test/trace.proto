@@ -7,6 +7,7 @@ option java_multiple_files = true;
 
 service Trace {
   rpc UploadTraces (Profiles) returns (google.protobuf.Empty);
+  rpc UploadTracesStream (stream Profiles) returns (google.protobuf.Empty);
 }
 
 message Profiles {
