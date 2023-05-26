@@ -1,6 +1,6 @@
 
 ## This repository consists of a GraphQL client and server.
-
+ 
 - Client is located under src/main/java
 - Server is located under src/main/kotlin
 
